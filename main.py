@@ -11,6 +11,7 @@ if __name__ == '__main__':
     while quit_operation not in ['000hon000']:
         is_administor = False
 
+        os.system('clear')
         Operations.ShowInformation(1)
         quit_operation = input('输入 [start] 进入操作:')
 
@@ -18,13 +19,15 @@ if __name__ == '__main__':
         if quit_operation in ['start']:
             over_time = 0
 
+            os.system('clear')
             #开始时先进行一次选择
             OperationList.OperationalList(is_administor)
             operation = input('输入想要进行的操作:')
             while operation not in ['0', 'Quit', 'q']:
+                os.system('clear')
                 if not is_administor and operation in ['4', 'EnterAdministratorJurisdiction', 'eaj']:
                     if over_time > time.time():
-                        print('暂时无法登录，请 {} 分钟后重试...'.format(int((over_time - time.time())/60)))
+                        print('\n暂时无法登录，请 {} 分钟后重试...\n'.format(int((over_time - time.time())/60)))
                     elif Operations.AdministorEnter() == 3:
                         over_time = time.time() + 650
                         print('登录失败')

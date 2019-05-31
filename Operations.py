@@ -2,6 +2,7 @@
 
 import time
 import os
+import getpass
 
 #判断用户名和密码是否正确，接收 "用户名" 和 "密码" 返回 "True" 或者 "False"
 def isAdministor(user_name, user_password):
@@ -14,7 +15,7 @@ def isAdministor(user_name, user_password):
 def AdministorEnter():
     for i in range(3):
         user_name = input('输入用户名:')
-        user_password = input('输入密码:')
+        user_password = getpass.getpass('输入密码:')
         if isAdministor(user_name, user_password):
             break
         else:
@@ -110,8 +111,13 @@ def ShowInformation(show_mode):
 
     elif show_mode == 3:
         line_num = 1
+        print('所有成员名单'.center(100, '-'))
         for p in show_data:
-            print(p[0] + ' ' + p[1], end = '\t\t')
+            if len(p[1]) < 3:
+                emptys = '\t\t\t'
+            else:
+                emptys = '\t\t'
+            print(p[0] + ' ' + p[1], end = emptys)
             if line_num == 5:
                 print()
                 line_num = 0
@@ -119,6 +125,7 @@ def ShowInformation(show_mode):
         print()
 
     elif show_mode == 4:
+        ShowInformation(3)
         the_man = IsManExist(input('输入你想找的人名:'))
         if the_man:
             with open('personal_data/' + the_man[0]) as pf:
@@ -133,7 +140,7 @@ def IsManExist(find_str):
     for p in find_data:
         if find_str in p:
             return [p[0], p[1]]
-    print('查无此人')
+    print('\n查无此人！\n')
     return []
 
 #接收序号判断该序号是否已经签到，若已签到，返回 "False"
